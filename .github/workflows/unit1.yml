@@ -1,0 +1,23 @@
+name: Unit1 Test
+on: 
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+    paths: ["unit1/exercises/e**"]
+    # branches-ignore: ["master", "main"]
+jobs: 
+  test:
+    name: "Test exercises"
+    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        excercise: [0,1,2,3,4,5]
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: '>1.18.0'
+      - uses: actions/checkout@v3
+      - name: Exercise ${{ matrix.excercise }}
+        run: go test -v unit1/e${{ matrix.excercise }}_test.go
+        env:
+          CGO_ENABLED: 0
+        working-directory: .ci

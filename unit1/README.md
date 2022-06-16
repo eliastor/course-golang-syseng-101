@@ -3,7 +3,7 @@ Please finish all material on https://go.dev/tour/ or https://go.dev/tour/list e
 
 Note: if you stuck with module try to read https://go.dev/blog/using-go-modules.
 
-### Quiz
+## Quiz
 
 #### Q1. How will you add the number 3 to the right side?
 
@@ -21,14 +21,14 @@ Note: if you stuck with module try to read https://go.dev/blog/using-go-modules.
 3. from anywhere in `fooModule`
 4. by other packages in `fooModule` as long as they import `fooPackage`
 
-### Q3. What should the idiomatic name be for an interface with a single method and the signature Serve() error
+#### Q3. What should the idiomatic name be for an interface with a single method and the signature Serve() error
 
 1. Servable
 2. Server
 3. ServeInterface
 4. IServe
 
-### Q4. Which is **not** valid loop construct?
+#### Q4. Which is **not** valid loop construct?
 
 1. `for i,r:=0,rand.Int(); i < r%10; i++ { ... }`
 2. `for { ... }`
@@ -104,27 +104,67 @@ If you exercise requires to make multiple files or even pacakges, don't hesitate
 
 As soon as you implemented the code and place it into `unit1/exercises/e0/main.go`, make PR to this repo.
 
+---
+
 ### E1. Fibonacci closure
 More: https://go.dev/tour/moretypes/26
 
+**Note**: Edit only `fibonacci` function definition:
+```go
+func fibonacci() func() int {}
+```
+Keep `main` function untouch. Don't add additional Prints to output. It is checked in tests.
+
 Share your implementation `unit1/exercises/e1/main.go` in github PR.
+
+---
 
 ### E2. Stringers
 More: https://go.dev/tour/methods/18
 
+Implement `func (ip IPAddr) String() string` method for `IPAddr` structure. 
+Note that receiver variable `ip` is not pointer.
+
+Keep `main` function untouch. Don't add additional Prints to output. It is checked in tests.
+
 Share your implementation  `unit1/exercises/e2/main.go` in github PR.
+
+---
 
 ### E3. Errors
 More: https://go.dev/tour/methods/20
 
+**Note**: errors are just values and must be treated as values. In this scenario error value will be `ErrNegativeSqrt` struct that satisfy error type. Nil is valid error, pointer to struct with `Error() string` method is valid error too.
+
+Keep `main` function untouch. Don't add additional Prints to output. It is checked in tests.
+
 Share your implementation  `unit1/exercises/e3/main.go` in github PR.
+
+---
 
 ### E4. rot13Reader
 More: https://go.dev/tour/methods/23
 
+`'A'` is a byte. It is treated as 8 bit number, so it can be compared and added/substracted. 
+
+not that A-Z and a-z letters have their own ranges and should be mapped to letter from their group: letter form A-Z must be mapped to letter from A-Z. Same for a-z.
+
+https://www.rapidtables.com/code/text/ascii-table.html
+
+
+Keep `main` function untouch. Don't add additional Prints to output. It is checked in tests.
+
 Share your implementation  `unit1/exercises/e4/main.go` in github PR.
+
+---
 
 ### E5. Images
 More: https://go.dev/tour/methods/25
 
+**Note**: read the docs for [golang.org/x/tour/pic](https://pkg.go.dev/golang.org/x/tour/pic) package.
+
+Keep `pic.ShowImage(m)` in `main` function untouch. Don't add additional Prints to output. It is checked in tests. 
+
 Share your implementation  `unit1/exercises/e5/main.go` in github PR.
+
+---
