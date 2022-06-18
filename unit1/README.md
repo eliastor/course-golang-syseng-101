@@ -1,7 +1,11 @@
 # Unit 1: A tour of Go
-Please finish all material on https://go.dev/tour/ or https://go.dev/tour/list except "Generics" and "Concurrency"
+Please finish all materials on https://go.dev/tour/ or https://go.dev/tour/list except "Generics" and "Concurrency"
 
 Note: if you stuck with module try to read https://go.dev/blog/using-go-modules.
+
+## FAQ
+
+TBA
 
 ## Quiz
 
