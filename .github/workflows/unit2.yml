@@ -10,7 +10,7 @@ jobs:
     runs-on: "ubuntu-latest"
     strategy:
       matrix:
-        excercise: [0,1,2,3]
+        excercise: [0,1,2]
     steps:
       - uses: actions/setup-go@v3
         with:

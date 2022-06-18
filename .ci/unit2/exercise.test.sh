@@ -6,6 +6,7 @@ cd ..
 
 go mod init course || true
 
+go get github.com/brianvoe/gofakeit
 go get github.com/stretchr/testify/assert
 go get golang.org/x/tour/tree
 
