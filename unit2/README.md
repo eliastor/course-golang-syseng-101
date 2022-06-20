@@ -16,9 +16,9 @@ Go to repo root and initilise module:
 go mod init course
 ```
 
-For the next excercises you'll need some packages. If you'll try to run exercise 1 it will fail with error:
+For the next excercises you'll need some packages. If you'll try to run exercise 0 it will fail with error:
     
-    unit2/exercises/e2/main.go:10:2: no required module provides package github.com/brianvoe/gofakeit; to add it:
+    unit2/exercises/e0/main.go:10:2: no required module provides package github.com/brianvoe/gofakeit; to add it:
         go get github.com/brianvoe/gofakeit
 
 Let's add unresolved dependency package by running `go get github.com/brianvoe/gofakeit`
@@ -57,7 +57,7 @@ Then the signature must be verified by Publisher and sent to nowhere.
 in addition we will count how many documents we created, signed, verified and sent to nowhere.
 
 
-Find [source code](exercises/e1/main.go) of this exercise.
+Find [source code](exercises/e0/main.go) of this exercise.
 
 Here some information about useful patterns that have been applied in this exercise among with several more syncronisation primitives.
 
@@ -70,7 +70,7 @@ The main idea of Fan Out Pattern is to have:
 - multiple workers use signaling channel to signal that the processing is done
 
 
-In this [excersice](exercises/e1/main.go) `docsNew` channel have 2 `executor`s goroutines spawned by `SpawnExecutors` function. Every `executor` listens same channel and as soon as message appears in channel it will be taken from the channel by first free executor.
+In this [excersice](exercises/e0/main.go) `docsNew` channel have 2 `executor`s goroutines spawned by `SpawnExecutors` function. Every `executor` listens same channel and as soon as message appears in channel it will be taken from the channel by first free executor.
 
 Original Fan-out pattern assumes that each worker has its own output channel or no outputs at all. In this exercise we connect workers output channel to one channel and receive Fan-In pattern
 
@@ -81,7 +81,7 @@ The main idea of Fan In Pattern is to have:
 - channel can be buffered, so we canget FIFO buffering of messages
 - collect messages from multiple goroutines to one channel for further processing
 
-In this [excersice](exercises/e1/main.go) `executor`s send processed messages further to [docsSigned channel](exercises/e1/main.go#L126), so in the channel there will be all messages from all executors.
+In this [excersice](exercises/e0/main.go) `executor`s send processed messages further to [docsSigned channel](exercises/e0/main.go#L126), so in the channel there will be all messages from all executors.
 
 ### Cancel signal propagation
 
@@ -99,9 +99,9 @@ str, ok := <- ch
 
 Once channel is closed, all messages from channel will received by receiver. The last message will be `str == ""` and `ok == false`. This special message can be read many times. This `ok` signal can help us to understand that channel has been closed.
 
-In our exercise we want whole pipeline to be shutted down gracefully by closing channel `done`. It will signal `bureaucrat` to [return from function](exercises/e1/main.go#L27-L28). Bureaucrat was called in [goroutine](exercises/e1/main.go#L73-76) from [SpawnBureaucrat](exercises/e1/main.go#L73-76), this goroutine will close output channel so signal from closed input channel will be prapagated to output channel.
+In our exercise we want whole pipeline to be shutted down gracefully by closing channel `done`. It will signal `bureaucrat` to [return from function](exercises/e0/main.go#L27-L28). Bureaucrat was called in [goroutine](exercises/e0/main.go#L73-76) from [SpawnBureaucrat](exercises/e0/main.go#L73-76), this goroutine will close output channel so signal from closed input channel will be prapagated to output channel.
 
-Next we have multiple executors connected to `bureaucrat` output channel `docsNew` and spawned by [SpawnExecutors](exercises/e1/main.go#L126). Each `executor` is working in its [own goroutine](exercises/e1/main.go#L99-L102).
+Next we have multiple executors connected to `bureaucrat` output channel `docsNew` and spawned by [SpawnExecutors](exercises/e0/main.go#L126). Each `executor` is working in its [own goroutine](exercises/e0/main.go#L99-L102).
 
 We decided to make Fan-In pattern for workers that's why we put their outputs into one channel that is returnet by `SpawnExecutors`. How we will propagate channel signal in this case? 
 We make additiona channel `fakeIn` and add `fanoutProxy` goroutine that will forward messages from `In` to `fakeIn`. As soon as `In` will be closed, both `fakeIn` and `out` channels will be closed, so signal will be propagated from input channel to workers and to output channel.
@@ -181,7 +181,7 @@ Ideal example for atomic counters, swaps and access operations is collection of 
 
 ### Quiz for Exercice 0
 
-#### Q1. Why [fmt.Println output](exercises/e1/main.go#L101) in executor goroutine is not shown in program output?
+#### Q1. Why [fmt.Println output](exercises/e0/main.go#L101) in executor goroutine is not shown in program output?
 
 1. `fmt` package doesn't work in goroutines other than main
 2. `fmt.Output` must be configured to stdout of goroutine
@@ -218,7 +218,7 @@ We just defined `i` variable in goroutine scope and called goroutine with **valu
 
 ---
 
-### Why s it concurrent safe?
+### Why is it concurrent safe?
 
 ```go
 ints := make([]int, n)
@@ -301,7 +301,11 @@ Share your implementation `unit2/exercises/e1/main.go` in github PR, during subm
 
 More:  https://go.dev/tour/concurrency/10
 
-**Note**: 
+**Note**: please remember that concurrent access to map is not safe.
+
+**Note**: don't hesitate to spawn a lot of goroutines.
+
+**Note**: don't forget to syncronize workflow of goroutines with crawlers. Crawl function must wait all spawned crawler/workers, etc...
 
 Keep `main` function untouch. Don't add additional Prints to output. It is checked in tests.
 
