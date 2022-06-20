@@ -10,28 +10,27 @@
 ## Structure
 
 This course consists of topics.
-Each topic has trainin materials, hints, quizes and excersices.
+Each topic has training materials, hints, quizes and excersices.
 
 Each quiz should be solved, and answers should be sent as replies in Issues for respective Unit or directly to me.
 
-Each exercies should be solved, and answers should be placed to respective folder sent in Pull Request to this repository. See Unit 1 Exercise 1 for more info.
+Each exercise should be solved, and answers should be placed to respective folder sent in Pull Request to this repository. See Unit 1 Exercise 0 for more info.
 
-If case of any question don't hesitate to use Issues or contact me directly.
+If case of any question, don't hesitate to use Issues or contact me directly.
 
-Sync the main branch form time to time, new units and FAQs are being added.
+Sync the main branch from time to time, new units and FAQs are being added.
 
 ### How to make Pull Request
 
-1. Find a project you want to contribute to
-2. Fork it
-3. Clone it to your local system
-4. Make a new branch
-5. Make your changes
-6. Push it back to your repo
-7. Click the Compare & pull request button
-8. Click Create pull request to open a new pull request
+1. Fork https://github.com/eliastor/course-golang-syseng-101/fork
+2. Clone forked repo to your local system
+3. Make a new branch
+4. Make your changes
+5. Push it back to your repo
+6. Click the Compare & pull request button
+7. Click Create pull request to open a new pull request
 
-If the reviewers ask for changes, repeat steps 5 and 6 to add more commits to your pull request.
+If the reviewers ask for changes, repeat steps 4 and 5 to add more commits to your pull request.
 
 ## Unit 1: A tour of Go
 
