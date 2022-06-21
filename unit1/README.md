@@ -18,12 +18,16 @@ TBA
 3. `append(numbers, 3)`
 4. `numbers = append(numbers, 3)`
 
+Answer: 4
+
 #### Q2. From where is the variable fooVar accessible if it is declared outside of any functions in a file in package fooPackage located inside module fooModule
 
 1. anywhere inside `fooPackage`, not the rest of `fooModule`
 2. by any application that imports `fooModule`
 3. from anywhere in `fooModule`
 4. by other packages in `fooModule` as long as they import `fooPackage`
+
+Answer: 
 
 #### Q3. What should the idiomatic name be for an interface with a single method and the signature Serve() error
 
@@ -32,12 +36,16 @@ TBA
 3. ServeInterface
 4. IServe
 
+Answer: 
+
 #### Q4. Which is **not** valid loop construct?
 
 1. `for i,r:=0,rand.Int(); i < r%10; i++ { ... }`
 2. `for { ... }`
 3. `{ ... } for false` 
 4. `for _,c := range "foobar" { ... }`
+
+Answer: 3	
 
 ## Excercises
 `E0` is for illustration how to work and submit Excercises.
