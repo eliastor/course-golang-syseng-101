@@ -7,7 +7,13 @@ import "fmt"
 func fibonacci() func() int {
 	start_num := 0
 	next_num := 1
+	i := 0
+
 	return func() int {
+		if i == 0 {
+			i++
+			return 0
+		}
 		sum := start_num + next_num
 		start_num = next_num
 		next_num = sum
