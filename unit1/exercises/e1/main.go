@@ -15,19 +15,6 @@ func fibonacci() func() int {
 	}
 }
 
-func fibonacci1() func() int {
-	prev := 0
-	current := 1
-	return func() int {
-		result := prev + current
-		prev = current
-		current = result
-
-		return result
-	}
-
-}
-
 func main() {
 	f := fibonacci()
 	for i := 0; i < 10; i++ {
