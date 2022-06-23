@@ -23,7 +23,7 @@ TBA
 1. anywhere inside `fooPackage`, not the rest of `fooModule` - here
 2. by any application that imports `fooModule`
 3. from anywhere in `fooModule`
-4. by other packages in `fooModule` as long as they import `fooPackage` - and here
+4. by other packages in `fooModule` as long as they import `fooPackage`
 
 #### Q3. What should the idiomatic name be for an interface with a single method and the signature Serve() error
 
