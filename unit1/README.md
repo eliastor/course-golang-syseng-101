@@ -16,14 +16,14 @@ TBA
 1. `numbers.append(3)`
 2. `numbers.insert(3, 3)`
 3. `append(numbers, 3)`
-4. `numbers = append(numbers, 3)`
+4. `numbers = append(numbers, 3)` - this doing it
 
 #### Q2. From where is the variable fooVar accessible if it is declared outside of any functions in a file in package fooPackage located inside module fooModule
 
-1. anywhere inside `fooPackage`, not the rest of `fooModule`
+1. anywhere inside `fooPackage`, not the rest of `fooModule` - here
 2. by any application that imports `fooModule`
 3. from anywhere in `fooModule`
-4. by other packages in `fooModule` as long as they import `fooPackage`
+4. by other packages in `fooModule` as long as they import `fooPackage` - and here
 
 #### Q3. What should the idiomatic name be for an interface with a single method and the signature Serve() error
 
@@ -36,7 +36,7 @@ TBA
 
 1. `for i,r:=0,rand.Int(); i < r%10; i++ { ... }`
 2. `for { ... }`
-3. `{ ... } for false` 
+3. `{ ... } for false` -- here is a failure
 4. `for _,c := range "foobar" { ... }`
 
 ## Excercises
@@ -74,7 +74,7 @@ func main() {
 ```
 
 Next we've asked to change loop condition to stop once the value has stopped changing (or only changes by a very small amount). We can achieve that by adding `epsilon` constant that will be compared with `delta`. 
-**Note that their absolute values should be compared**. One approach is to use `Abs()` function form `math` package, or we can notice that `x` argument must be positive and kae our own condition based on partial comparison of positive-only numbers:
+**Note that their absolute values should be compared**. One approach is to use `Abs()` function form `math` package, or we can notice that `x` argument must be positive and care(?) our own condition based on partial comparison of positive-only numbers:
 
 ```go
 package main
@@ -104,7 +104,7 @@ func main() {
 ```
 
 If you haven't managed to solve all steps publish code for the step you succeeded and make a comment in code.
-If you exercise requires to make multiple files or even pacakges, don't hesitate to create them in `unit1/exercises/eX/` folder
+If you exercise requires to make multiple files or even packages, don't hesitate to create them in `unit1/exercises/eX/` folder
 
 As soon as you implemented the code and place it into `unit1/exercises/e0/main.go`, make PR to this repo.
 
