@@ -13,11 +13,13 @@ func fibonacci() func() int {
 		if i == 0 {
 			i++
 			return 0
+		} else {
+			sum := start_num + next_num
+			start_num = next_num
+			next_num = sum
+			return start_num
 		}
-		sum := start_num + next_num
-		start_num = next_num
-		next_num = sum
-		return sum
+
 	}
 }
 
