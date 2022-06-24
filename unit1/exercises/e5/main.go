@@ -1,23 +1,10 @@
 package main
 
-import (
-	"fmt"
-)
+import "golang.org/x/tour/pic"
 
-type ErrNegativeSqrt float64
-
-func (e ErrNegativeSqrt) Error() string {
-	return fmt.Sprint("cannot Sqrt negative number: ", float64(e))
-}
-
-func Sqrt(x float64) (float64, error) {
-	if x < 0 {
-		return 0, ErrNegativeSqrt(x)
-	}
-	return 0, nil
-}
+type Image struct{}
 
 func main() {
-	fmt.Printlncd(Sqrt(2))
-	fmt.Println(Sqrt(-2))
+	m := Image{}
+	pic.ShowImage(m)
 }
