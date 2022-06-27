@@ -27,7 +27,7 @@ Answer: 4
 3. from anywhere in `fooModule`
 4. by other packages in `fooModule` as long as they import `fooPackage`
 
-Answer: 
+Answer: 1
 
 #### Q3. What should the idiomatic name be for an interface with a single method and the signature Serve() error
 
@@ -36,7 +36,7 @@ Answer:
 3. ServeInterface
 4. IServe
 
-Answer: 
+Answer: 2
 
 #### Q4. Which is **not** valid loop construct?
 
