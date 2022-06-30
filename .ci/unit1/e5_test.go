@@ -8,15 +8,18 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestExercise5_Syntax(t *testing.T) {
 }
 
 func runCommandAndTest(t *testing.T, testfunc func(t *testing.T, stdOut string, stdErr string), wdir string, name string, args ...string) {
-
+	tmpDir, err := ioutil.TempDir("", "")
+	require.NoError(t, err)
+	t.Cleanup(func() { _ = os.RemoveAll(tempdir) })
+	
 	cmd := exec.Command(name, args...)
-	tmpDir := t.TempDir()
 
 	cmd.Env = []string{
 		"PATH=" + os.Getenv("PATH"),
