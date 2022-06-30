@@ -1,3 +1,7 @@
+package main
+
+import "fmt"
+
 // a function that returns an int.
 func fibonacci() func() int {
 	a, b := 0, 0
