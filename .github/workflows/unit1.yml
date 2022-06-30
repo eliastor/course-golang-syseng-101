@@ -1,5 +1,6 @@
 name: Unit1 Test
-on: 
+on:
+  workflow_dispatch:
   pull_request:
     types: [opened, reopened, synchronize, edited]
     paths: ["unit1/exercises/e**"]
