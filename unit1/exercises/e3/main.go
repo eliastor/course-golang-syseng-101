@@ -22,7 +22,7 @@ func Sqrt(x float64) (float64, error) {
 	}
 	for i := 1; i < 20; i++ {
 		z -= (z*z - x) / (2 * z)
-		fmt.Println(z)
+		// fmt.Println(z)
 	}
 	return z, nil
 }
