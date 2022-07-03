@@ -14,15 +14,12 @@ var e ErrNegativeSqrt
 
 func Sqrt(x float64) (float64, error) {
 	var z float64
-	//var e error
 	z = x
-	//fmt.Println(z)
 	if z < 0 {
-		return z, e
+		return 0, e
 	}
 	for i := 1; i < 20; i++ {
 		z -= (z*z - x) / (2 * z)
-		// fmt.Println(z)
 	}
 	return z, nil
 }
