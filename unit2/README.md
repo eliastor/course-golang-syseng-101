@@ -188,6 +188,7 @@ Ideal example for atomic counters, swaps and access operations is collection of 
 3. goroutine is not in time to finish before program exits
 4. goroutine panics because of concurrent access of `totals` slice
 
+#### Answer: 3
 ## FAQ
 
 ### Why accessing counter variable in spawned goroutine is bad?
@@ -244,7 +245,7 @@ Opposite situation will be if we'll try to append elements to slice concurrently
 2. Loop over a select statement.
 3. Sleep for a safe amount of time.
 4. sync.WaitGroup
-
+#### Answer: 4
 
 #### Q3. What does a sync.Mutex block while it is locked?
 
@@ -253,12 +254,16 @@ Opposite situation will be if we'll try to append elements to slice concurrently
 3. any reads or writes of the variable it is locking
 4. any writes to the variable it is locking
 
+#### Answer: 3
+
 #### Q4. What is the select statement used for?
 
 1. executing a function concurrently
-1. executing a different case based on the type of a variable
-2. executing a different case based on the value of a variable
-3. executing a different case based on which channel returns first
+2. executing a different case based on the type of a variable
+3. executing a different case based on the value of a variable
+4. executing a different case based on which channel returns first
+
+#### Answer: 4
 
 #### Q5. What is a channel?
 
@@ -267,6 +272,7 @@ Opposite situation will be if we'll try to append elements to slice concurrently
 3. a dynamic array of values
 4. a lightweight thread for concurrent programming
 
+#### Answer: 2
 
 ## Excercises
 
