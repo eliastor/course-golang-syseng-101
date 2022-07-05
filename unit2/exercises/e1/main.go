@@ -15,7 +15,6 @@ import (
 // Walk walks the tree t sending all values
 // from the tree to the channel ch.
 func Walk(t *tree.Tree, ch chan int) {
-	//arr := []int{}
 
 	re := regexp.MustCompile("[0-9]+")
 	str := re.FindAllString(t.String(), -1)
@@ -24,7 +23,7 @@ func Walk(t *tree.Tree, ch chan int) {
 		a, _ := strconv.Atoi(str[i])
 		ch <- a
 	}
-	close(ch)
+	// close(ch)
 }
 
 // Same determines whether the trees
@@ -35,14 +34,16 @@ func Same(t1, t2 *tree.Tree) bool {
 	go Walk(t1, ch1)
 	go Walk(t2, ch2)
 
-	arr1 := []int{}
-	arr2 := []int{}
+	var arr1, arr2 []int
 
-	for val := range ch1 {
-		arr1 = append(arr1, val)
-	}
-	for val := range ch2 {
-		arr2 = append(arr2, val)
+	tr1, tr2 := 0, 0
+	for i := 0; i < 20; i++ {
+		select {
+		case tr1 = <-ch1:
+			arr1 = append(arr1, tr1)
+		case tr2 = <-ch2:
+			arr2 = append(arr2, tr2)
+		}
 	}
 	for i := range arr1 {
 		if arr1[i] != arr2[i] {
