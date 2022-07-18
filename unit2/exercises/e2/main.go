@@ -16,7 +16,6 @@ func crawler(url string, d int, f Fetcher, v map[string]bool) {
 	if d <= 0 {
 		return
 	}
-	// use a set to identify if the URL should be traversed or not
 	if v[url] == true {
 		wg.Done()
 		return
