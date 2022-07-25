@@ -49,7 +49,7 @@ Wait groups:
 Let's start with sample exercise.
 
 There is Bureaucracy office that generates meaningless documents.
-For some reasons the office have to switch to electronic document workflow.
+For some reasons the office use electronic document workflow.
 
 Bureaucrat generate documents.
 Each document must be signed with Signature of the office by Executor.
@@ -78,7 +78,7 @@ Original Fan-out pattern assumes that each worker has its own output channel or 
 
 The main idea of Fan In Pattern is to have:
 - a channel that provides a signaling semantics ( close(chan) )
-- channel can be buffered, so we canget FIFO buffering of messages
+- channel can be buffered, so we can get FIFO buffering of messages
 - collect messages from multiple goroutines to one channel for further processing
 
 In this [excersice](exercises/e0/main.go) `executor`s send processed messages further to [docsSigned channel](exercises/e0/main.go#L126), so in the channel there will be all messages from all executors.
@@ -310,3 +310,9 @@ More:  https://go.dev/tour/concurrency/10
 Keep `main` function untouch. Don't add additional Prints to output. It is checked in tests.
 
 Share your implementation `unit2/exercises/e2/main.go` in github PR.
+
+---
+
+## Summary of what you learnt
+
+We've learned concurency primitives and its syntax, teared down some popular design patterns for concurency and got signal propagation in channels.

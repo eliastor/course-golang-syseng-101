@@ -1,4 +1,4 @@
-name: Unit1 Test
+name: Unit1 Tests
 on: 
   pull_request:
     types: [opened, reopened, synchronize, edited]
