@@ -379,15 +379,13 @@ func main() {
 8. to make a copy of stream (like tee command): [io.TeeReader](https://pkg.go.dev/io#TeeReader)
 
 
-## E0. Web server logs to json converter with some statistics
+## E0. Web server logs to json converter
 
 For purposes of this exercise let's write generator that can be used in abscense of real log file.
 Our converter is reading data line by line and converting every line to json. Json must contain client IP, HTTP method, URI path, response code, response size and timestamp of the request.
 If real log file is provided, the app is converting provided file.
 
 Find [source code](exercises/e0/main.go) of this exercise.
-
-Here some information about useful patterns that have been applied in th
 
 ---
 
