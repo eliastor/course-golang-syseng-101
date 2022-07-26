@@ -84,7 +84,6 @@ var fetcher = fakeFetcher{
 			"https://golang.org/cmd/",
 			"https://golang.org/pkg/fmt/",
 			"https://golang.org/pkg/os/",
-			"https://golang.org/pkg/os1/",
 		},
 	},
 	"https://golang.org/pkg/fmt/": &fakeResult{
@@ -96,13 +95,6 @@ var fetcher = fakeFetcher{
 	},
 	"https://golang.org/pkg/os/": &fakeResult{
 		"Package os",
-		[]string{
-			"https://golang.org/",
-			"https://golang.org/pkg/",
-		},
-	},
-	"https://golang.org/cmd/": &fakeResult{
-		"Package cmd",
 		[]string{
 			"https://golang.org/",
 			"https://golang.org/pkg/",
