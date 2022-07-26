@@ -48,9 +48,14 @@ ETC: 7-14 hours
 
 More on [unit folder](unit2)
 
+## Unit 3: First project with streams
+
+ETC: 7-8 hours
+
+More on [unit folder](unit3)
+
 ## Roadmap of further units
 
-3. First project. Streams
 4. Web ~~sarvar~~ server 
 5. Tests
 6. Metrics, logging, error handling
