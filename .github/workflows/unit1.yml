@@ -1,6 +1,5 @@
-name: Unit1 Test
-on:
-  workflow_dispatch:
+name: Unit1 Tests
+on: 
   pull_request:
     types: [opened, reopened, synchronize, edited]
     paths: ["unit1/exercises/e**"]
@@ -12,6 +11,7 @@ jobs:
     strategy:
       matrix:
         excercise: [0,1,2,3,4,5]
+      fail-fast: false
     steps:
       - uses: actions/setup-go@v3
         with:
