@@ -22,15 +22,9 @@ func main() {
 		// if filename specified open the file
 		filename = os.Args[1]
 		if string(filename) == "-" {
-			flog, err := os.Open(filename)
-			if err != nil {
-				log.Println(err)
-				return
-			}
-			defer flog.Close()
+			flog := bufio.NewReader(os.Stdin)
 			scannerInput = flog
-		}
-		if strings.HasSuffix(filename, ".gz") || strings.HasSuffix(filename, ".gzip") {
+		} else if strings.HasSuffix(filename, ".gz") || strings.HasSuffix(filename, ".gzip") {
 			file, err := os.Open(filename)
 
 			if err != nil {
@@ -69,7 +63,6 @@ func main() {
 
 	// linescanner allows us to scan input stream of bytes from flog and split the stream to lines: https://pkg.go.dev/bufio#Scanner
 	// as soon as flog satisfy io.Reader we can use it as argument for NewScanner
-
 	linescanner := bufio.NewScanner(scannerInput)
 	linescanner.Split(bufio.ScanLines)
 
