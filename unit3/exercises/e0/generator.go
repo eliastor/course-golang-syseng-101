@@ -10,9 +10,11 @@ import (
 // It checks during compile time (or even in IDE with gopls enabled) that fakeLogCannon satisfy io.Reader, io.Closer and Server interfaces
 // Satisfying some interfaces means that fakeLogCannon has the same definitions of all methods listed in specific interface.
 // For example definion of io.Reader interface is:
-// type Reader interface {
-// 		Read(p []byte) (n int, err error)
-// }
+//
+//	type Reader interface {
+//			Read(p []byte) (n int, err error)
+//	}
+//
 // fakeLogCannon has method Read(p []byte) (n int, err error)
 var (
 	_ io.Reader = (&fakeLogCannon{})
@@ -26,9 +28,6 @@ type fakeLogCannon struct {
 
 	//flogger contains logic for fake logs generation.
 	flogger *fakelog.Logger
-
-	// pipeClose is funcion that will close pipe. we'll use it in Close method
-	pipeClose func()
 }
 
 // Read is method for satisfying io.Reader interface. It will read data from pipe, where it was pushed by fakelog.Logger instance
@@ -56,10 +55,7 @@ func NewFakeLogGenerator() *fakeLogCannon {
 	cannon.r, cannon.w = io.Pipe()
 
 	cannon.flogger = fakelog.NewLogger(fakelog.ApacheCommonLine, cannon.w, 200)
-	cannon.pipeClose = func() {
-		cannon.r.Close()
-		// r.Close() is not needed. Take a look on internal of io.Pipe: both r and w Close methods close one done channel
-	}
+
 	go cannon.flogger.GenerateLogs()
 
 	return cannon

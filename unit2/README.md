@@ -44,6 +44,36 @@ Wait groups:
 
 ---
 
+## Build and run exercise
+
+To build exercise, being in root folder of the repo you can run:
+
+```bash
+go build ./unit2/exercises/e0
+```
+
+This command will build local folder with all `.go` files in it and place result application to `e0` file in current (repo root folder).
+
+If you want to specify name of path of the file:
+
+```bash
+go build -o ./unit2/e0 ./unit2/exercises/e0
+```
+
+for oxercies of these and next unit it is handy to build and run in one command:
+
+```bash
+go run ./unit2/exercises/e0
+```
+
+It will build and run code in `./unit2/exercises/e0` and it's handy to use it in terminal with pipes:
+
+```bash
+./unit2/exercises/e0 | grep nowhere
+```
+
+---
+
 ## E0. Bureaucracy office (FanOut, FanIn)
 
 Let's start with sample exercise.
@@ -136,6 +166,9 @@ func SpawnExecutors(n int, priv ed25519.PrivateKey, in <-chan *Document) <-chan 
 More info: https://gobyexample.com/mutexes
 
 Generaly if you want to access map or want to modify underlying data storage for any data type from multiple places concurrently, you must use sync.Mutex for every access of the data type.
+
+// mutex in map
+
 
 ### sync.Once
 
@@ -316,3 +349,12 @@ Share your implementation `unit2/exercises/e2/main.go` in github PR.
 ## Summary of what you learnt
 
 We've learned concurency primitives and its syntax, teared down some popular design patterns for concurency and got signal propagation in channels.
+
+goroutine for app flow
+
+mutexes for data
+
+---
+
+how goroutines are been executed: scheduler and Qs
+go func(){}() declaration
