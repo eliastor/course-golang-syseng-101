@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Automatic Approve
-        uses: mheap/automatic-approve-action@v1
+        uses: eliastor/automatic-approve-action@v1
         with:
           token: ${{ secrets.PAT }}
           workflows: "unit1.yml,unit2.yml,unit3.yml,unit4.yml,unit5.yml,unit6.yml,unit7.yml,unit8.yml,unit9.yml"
