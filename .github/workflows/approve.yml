@@ -2,7 +2,7 @@ name: Automatic Approve
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/6 * * * *"
+    - cron: "*/5 * * * *"
 jobs:
   automatic-approve:
     name: Automatic Approve
@@ -11,6 +11,6 @@ jobs:
       - name: Automatic Approve
         uses: mheap/automatic-approve-action@v1
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           workflows: "unit1.yml,unit2.yml,unit3.yml,unit4.yml"
           dangerous_files: ".ci"
