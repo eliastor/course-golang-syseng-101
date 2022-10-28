@@ -2,7 +2,7 @@ name: Automatic Approve
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/6 * * * *"
 jobs:
   automatic-approve:
     name: Automatic Approve
