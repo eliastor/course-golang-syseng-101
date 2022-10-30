@@ -4,28 +4,30 @@ import (
 	"fmt"
 )
 
-/* func Sqrt(x float64) (float64, error) {
-	return 0, nil
-}*/
-
 type ErrNegativeSqrt float64
 
-var e ErrNegativeSqrt
-
-func Sqrt(x float64) (float64, error) {
-	var z float64
-	z = x
-	if z < 0 {
-		return 0, e
-	}
-	for i := 1; i < 20; i++ {
-		z -= (z*z - x) / (2 * z)
-	}
-	return z, nil
+func (e ErrNegativeSqrt) Error() string {
+	return fmt.Sprint("cannot Sqrt negative number: -2\n")
 }
 
-func (e ErrNegativeSqrt) Error() string {
-	return fmt.Sprintf("cannot Sqrt negative number: -2")
+func Sqrt(x float64) (float64, error) {
+	var e ErrNegativeSqrt
+	epsilon := 0.0000000000001
+	z := x / 2
+	i := 1
+	if x < 0 {
+		return 0, e
+	}
+	for {
+		delta := (z*z - x) / (2 * z)
+		if delta < epsilon && delta > -epsilon {
+			break
+		}
+		z -= delta
+		//fmt.Println(i," : ", z)
+		i += 1
+	}
+	return z, nil
 }
 
 func main() {
