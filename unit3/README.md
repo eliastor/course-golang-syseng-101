@@ -49,7 +49,79 @@ This unit covers two most popular concepts: interfaces and IO operations.
 Refresh interfaces syntax and key concepts:
 https://gobyexample.com/interfaces and https://go.dev/tour/methods/9
 
-Interface is set of function definitions. Specific type implements interface when type has all functions defined in interfaces with same definition.
+Interface is set of function definitions. Specific type implements interface when type has all functions defined in interfaces with same definition. For an instance:
+
+
+#### Typical usage of interfaces
+
+```go
+type Stringer interface {
+	String() string
+}
+
+func PrintAll(stringers []Stringer) {
+	for _, stringer := range stringers {
+		fmt.Println(stringer.String())
+	}
+}
+```
+
+We say that something satisfies this interface (or implements this interface) if it has a method with the exact signature `String() string`.
+
+Above code means that we define `Stringer` interface and we wrote function that outputs return values of String() function of elements in `stringers`. We are not aware of actual implementation (specific struct) of `String() string`, but we just want to use everything that satisfy this interface.
+
+Let's define some structs and some elementes to slice `[]Stringer`:
+
+```go
+type Book struct {
+	Title  string
+	Author string
+}
+
+func (b *Book) String() string {
+	return "Book \"" + b.Title + "\" of \"" + b.Author + "\""
+}
+
+type LogRecord struct {
+	Time    time.Time
+	Message string
+}
+
+func (r *LogRecord) String() string {
+	return r.Time.String() + " " + r.Message
+}
+
+func main() {
+	stringers := []Stringer{}
+
+	stringers = append(stringers, &Book{
+		Title:  "Book 1",
+		Author: "Author 1",
+	})
+
+	stringers = append(stringers, &Book{"Book 2", "Author 2"}) // the same as above, short definition
+
+	stringers = append(stringers, &LogRecord{
+		Time:    time.Now(),
+		Message: "log message 1",
+	})
+
+	stringers = append(stringers, &LogRecord{time.Now(), "log message 1"})
+}
+```
+
+Now `stringers` slice contains 2 Books and 2 LogRecords. Now we can call PrintAll and provide `stringers` variable and you'll get something like:
+
+
+```
+Book "Book 1" of "Author 1"
+Book "Book 2" of "Author 2"
+2009-11-10 23:00:00 +0000 UTC m=+0.000000001 log message 1
+2009-11-10 23:00:00 +0000 UTC m=+0.000000001 log message 1
+```
+[![Try in playground](https://img.shields.io/badge/go%20playground-try-blue)](https://go.dev/play/p/6YnbdR72vVW)
+
+#### More examples of interfaces
 
 Let's imagine that you application requires some Key-Value in-memory storage for strings, for example cache. You've implemented it using `map[string]string`:
 
@@ -182,7 +254,13 @@ func  (s *fileBackedStorage) Put(key, value string) {
 Every of these storages satisfy `Cache` interface and can be passed to every function that expects `Cache` interface.
 
 ```go
-cache := NewInMemStore()
+var cache Cacher
+if persistantCache == true {
+    cache = NewFileStorage()
+} else {
+    cache = NewInMemStore()
+}
+
 // or cache := NewFileStorage("/var/lib/app/cache")
 _ = GetFoo(cache) // it will work no matter which Store was created and passed
 ```
@@ -281,7 +359,7 @@ func NewAAAReader(len int) io.Reader {
 
 Now if we'll create `aaa` reader with length of 10 and read it by executing Read or using [io.ReadAll](https://pkg.go.dev/io#ReadAll)  we'll receive `AAAAAAAAAA` (10 A's).
 
-Try it in [playground](https://go.dev/play/p/pRJ4xvj6RSS)
+Try it in [playground](https://go.dev/play/p/pRJ4xvj6RSS). In this example we are reading Reader by chunks wite size of 4 bytes and print them to console. As soon as we print it with `fmt.Print()` the output will be showed as one line. Main benefit here is constant low memory consumption: we read small portion of data and the output it, in next iteration we just rewrite buffer with new portion and output it again and again. If we'll use [io.ReadAll](https://pkg.go.dev/io#ReadAll) it will read all the data from the Reader to memory.
 
 ### io.Reader chaining
 
@@ -370,7 +448,7 @@ func main() {
 ### Another useful stream objects:
 
 1. to copy only specifc amount of data: [io.CopyN](https://pkg.go.dev/io#CopyN)
-2. to connect Reader and Writer (for exampel for compression): [io.Pipe](https://pkg.go.dev/io#Pipe)
+2. to connect Reader and Writer (for example for compression): [io.Pipe](https://pkg.go.dev/io#Pipe)
 3. to read specifc amount of data: [io.LimitedReader](https://pkg.go.dev/io#LimitedReader)
 4. to seek and read sections (for archives, files and S3 objects): [io.SectionReader](https://pkg.go.dev/io#SectionReader)
 5. to make different chains for Reader and Writer (like http(s) reverse proxy): [bufio.ReadWriter](https://pkg.go.dev/bufio#ReadWriter)
@@ -378,12 +456,38 @@ func main() {
 7. to parse simple formats: [bufio.Scanner](https://pkg.go.dev/bufio#Scanner)
 8. to make a copy of stream (like tee command): [io.TeeReader](https://pkg.go.dev/io#TeeReader)
 
-
 ## E0. Web server logs to json converter
 
 For purposes of this exercise let's write generator that can be used in abscense of real log file.
 Our converter is reading data line by line and converting every line to json. Json must contain client IP, HTTP method, URI path, response code, response size and timestamp of the request.
 If real log file is provided, the app is converting provided file.
+
+To build exercise, being in root folder of the repo you can run:
+
+```bash
+go build ./unit3/exercises/e0
+```
+
+This command will build local folder with all `.go` files in it and place result application to `e0` file in current (repo root folder).
+
+If you want to specify name of path of the file:
+
+```bash
+go build -o ./unit3/e0 ./unit3/exercises/e0
+```
+
+for oxercies of these and next unit it is handy to build and run in one command:
+
+```bash
+go run ./unit3/exercises/e0
+```
+
+It will build and run code in `./unit3/exercises/e0` and it's handy to use it in terminal with pipes:
+
+```bash
+./unit3/exercises/e0 | grep nowhere
+```
+
 
 Find [source code](exercises/e0/main.go) of this exercise.
 
@@ -430,14 +534,20 @@ TBA
 
 ### E1. Adding read from stdin
 
-Extend code from exercise 0 by adding support of reading from stdin if filename is "-"
+Extend code from exercise 0 by adding support of reading from Standard Input (stdin) in if filename is "-" like it is in some shell commands, for exampel in cat:
 
-**Note**: Go has `os.Stdin` which satisfy io.Reader interface and represents standard input of application.
+```
+echo "AAAAAAA" | go run ./unit3/exercises/e1
+```
+
+**Note**: Go has `os.Stdin` which satisfy io.Reader interface and represents standard input of application. Everything entered to stdin (manually or by shell piping) will be available through `os.Stdin`
+
+**Note**: Test verifies the output of your program by running it and sending generated input to your program through Stdin.
 
 Don't add additional Prints to output. It is checked in tests.
 
 Share your implementation `unit3/exercises/e1/main.go` in github PR.
-Don't hesitate to copy contents of `unit3/exercises/e0/` to ``unit3/exercises/e1/` and modify necessary files.
+Don't hesitate to copy contents of `unit3/exercises/e0/` to `unit3/exercises/e1/` and modify necessary files.
 
 ### E2. Adding read from gzipped files
 
@@ -453,6 +563,10 @@ if strings.HasSuffix(filename, ".gz") || strings.HasSuffix(filename, ".gzip") {
 
 Hint 2:
 [gzip example](https://pkg.go.dev/compress/gzip#example-package-WriterReader)
+
+**Note**: This test include all test cases from **exercise 1**
+
+**Note**: Test verifies the output of your program by running it and sending generated input to your program through Stdin.
 
 Don't add additional Prints to output. It is checked in tests.
 
