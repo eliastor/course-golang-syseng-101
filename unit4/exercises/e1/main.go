@@ -19,11 +19,9 @@ func echo(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Error reading request body",
 				http.StatusInternalServerError)
 		}
-		//results = append(results, string(body))
-
 		fmt.Fprint(w, string(body))
 	default:
-		fmt.Fprintf(w, "Sorry, only GET and POST methods are supported.")
+		fmt.Fprintf(w, "Sorry, only POST methods are supported.")
 	}
 }
 
