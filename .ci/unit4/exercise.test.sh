@@ -6,5 +6,6 @@ cp "unit${UNITN}/e$1_main_test.go.tpl" "../unit${UNITN}/exercises/e$1/main_test.
 cd ..
 
 go mod init course || true
+go get github.com/stretchr/testify/assert
 
 CGO_ENABLED=0 go test "./unit${UNITN}/exercises/e$1/..."
