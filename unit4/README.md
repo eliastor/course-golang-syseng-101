@@ -10,7 +10,7 @@ Extessive material can be found on [official go site](https://go.dev/doc/article
 
 ## Servers, multiplexers, routers
 
-Most of the examples with implementation ща Go http servers with standard library can be reduced to code:
+Most of the examples with implementation of Go http servers with standard library can be reduced to code:
 
 ```go
 
@@ -249,8 +249,8 @@ Key point here is to get `HTTP/1.1 400 Bad Request` response.
 
 Don't add additional Prints to output. It is checked in tests.
 
-Share your implementation `unit4/exercises/e1/main.go` in github PR.
-Don't hesitate to copy contents of `unit4/exercises/e0/` to `unit4/exercises/e1/` and modify necessary files or add new ones.
+Share your implementation `unit4/exercises/e2/main.go` in github PR.
+Don't hesitate to copy contents of `unit4/exercises/e1/` to `unit4/exercises/e2/` and modify necessary files or add new ones.
 
 **Hints**
 
