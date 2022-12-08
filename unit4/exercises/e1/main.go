@@ -21,7 +21,7 @@ func echo(w http.ResponseWriter, r *http.Request) {
 		r := bytes.NewReader(body)
 		io.Copy(w, r)
 	default:
-		fmt.Fprintf(w, "Sorry, only POST methods are supported.")
+		fmt.Fprintf(w, "Sorry, only POST methods are supported")
 	}
 }
 
