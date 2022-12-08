@@ -3,11 +3,10 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 )
-
-var results []string
 
 func echo(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
@@ -19,7 +18,8 @@ func echo(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Error reading request body",
 				http.StatusInternalServerError)
 		}
-		fmt.Fprint(w, string(body))
+		r := bytes.NewReader(body)
+		io.Copy(w, r)
 	default:
 		fmt.Fprintf(w, "Sorry, only POST methods are supported.")
 	}
