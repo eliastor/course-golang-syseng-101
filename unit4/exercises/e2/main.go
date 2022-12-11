@@ -8,21 +8,42 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"strings"
 )
 
+// func ungzip(w http.ResponseWriter, r *http.Request) {
+
+// 	if strings.Contains(r.Header.Get("Content-Encoding"), "gzip") {
+// 		reader, err := gzip.NewReader(r.Body)
+// 		if err != nil {
+// 			fmt.Println(err)
+// 			os.Exit(1)
+// 		}
+// 		io.Copy(w, reader)
+
+// 	} else {
+// 		http.Error(w, "", http.StatusBadRequest)
+// 	}
+
+// }
+
 func ungzip(w http.ResponseWriter, r *http.Request) {
-	//h := r.Header
 
-	if strings.Contains(r.Header.Get("Content-Encoding"), "gzip") {
-		reader, err := gzip.NewReader(r.Body)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
+	switch r.Method {
+	case "POST":
+		testBytes, _ := ioutil.ReadAll(r.Body)
+		r := bytes.NewReader(testBytes)
+		if testBytes[0] == 31 && testBytes[1] == 139 {
+			reader, err := gzip.NewReader(r)
+			if err != nil {
+				fmt.Println(err)
+				os.Exit(1)
+			}
+			io.Copy(w, reader)
+		} else {
+			http.Error(w, "", http.StatusBadRequest)
 		}
-		io.Copy(w, reader)
 
-	} else {
+	default:
 		http.Error(w, "", http.StatusBadRequest)
 	}
 

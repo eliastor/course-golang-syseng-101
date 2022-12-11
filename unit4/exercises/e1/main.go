@@ -2,31 +2,11 @@ package main
 
 import (
 	"bytes"
-	"compress/gzip"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
-	"os"
-	"strings"
 )
-
-func ungzip(w http.ResponseWriter, r *http.Request) {
-	//h := r.Header
-
-	if strings.Contains(r.Header.Get("Content-Encoding"), "gzip") {
-		reader, err := gzip.NewReader(r.Body)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		io.Copy(w, reader)
-
-	} else {
-		http.Error(w, "", http.StatusBadRequest)
-	}
-
-}
 
 func echo(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
