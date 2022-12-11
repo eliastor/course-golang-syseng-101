@@ -44,7 +44,6 @@ func main() {
 	})
 
 	mux.HandleFunc("/echo", echo)
-	mux.HandleFunc("/ungzip", ungzip)
 	addr := ":8080"
 
 	fmt.Println("Starting server on " + addr)
