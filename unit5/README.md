@@ -295,25 +295,11 @@ TBA
 
 ## Quiz
 
-#### Q1. What handler will be called for "/a/b/c?foo=bar"  for following mux code?
-
-```
-	mux.HandleFunc("/", defaultHandler)
-	mux.HandleFunc("/a/", aHandler)
-	mux.HandleFunc("/b", bHandler)
-	mux.HandleFunc("/c", cHandler)
-	mux.HandleFunc("/a/b", abHandler)
-```
-
-1. aHandler
-2. bHandler
-3. cHandler
-4. abHandler
-
+#### Q1. TBA
 
 ## Excercises
 
-### E1. Echo
+### E1. pow operation for Math script processor
 
 Extend code from exercise 0: Add more function `pow` that will count first argument in a power of the second one, for example:
 
