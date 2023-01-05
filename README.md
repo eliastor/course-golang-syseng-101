@@ -60,7 +60,13 @@ ETC: 7-8 hours
 
 More on [unit folder](unit4)
 
-## Unit 5: Contexts
+## Unit 5: Errors
+
+ETC: 4-6 hours
+
+More on [unit folder](unit5)
+
+## Unit 6: Contexts
 
 ## Roadmap of further units
 
