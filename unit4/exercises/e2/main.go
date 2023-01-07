@@ -7,7 +7,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"os"
 )
 
 // func ungzip(w http.ResponseWriter, r *http.Request) {
@@ -26,22 +25,40 @@ import (
 
 // }
 
+// func ungzip(w http.ResponseWriter, r *http.Request) {
+
+// 	switch r.Method {
+// 	case "POST":
+// 		testBytes, _ := ioutil.ReadAll(r.Body)
+// 		r := bytes.NewReader(testBytes)
+// 		if testBytes[0] == 31 && testBytes[1] == 139 {
+// 			reader, err := gzip.NewReader(r)
+// 			if err != nil {
+// 				fmt.Println(err)
+// 				os.Exit(1)
+// 			}
+// 			io.Copy(w, reader)
+// 		} else {
+// 			http.Error(w, "", http.StatusBadRequest)
+// 		}
+
+// 	default:
+// 		http.Error(w, "", http.StatusBadRequest)
+// 	}
+
+// }
 func ungzip(w http.ResponseWriter, r *http.Request) {
 
 	switch r.Method {
 	case "POST":
 		testBytes, _ := ioutil.ReadAll(r.Body)
 		r := bytes.NewReader(testBytes)
-		if testBytes[0] == 31 && testBytes[1] == 139 {
-			reader, err := gzip.NewReader(r)
-			if err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-			io.Copy(w, reader)
-		} else {
-			http.Error(w, "", http.StatusBadRequest)
+		reader, err := gzip.NewReader(r)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
+		io.Copy(w, reader)
 
 	default:
 		http.Error(w, "", http.StatusBadRequest)

@@ -1,0 +1,6 @@
+mul 2 2
+div 20 2
+pow 2 3
+pow 2 4
+pow 3 2
+pow 3 0
