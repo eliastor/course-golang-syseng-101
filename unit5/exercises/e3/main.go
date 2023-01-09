@@ -14,11 +14,29 @@ var ErrDivideByZero = errors.New("divide by zero")
 var ErrIntOverflow = errors.New("integer overflow")
 var ErrNotValidInteger = errors.New("argument is not valid integer")
 
+type ExpressionError struct {
+	A   int   `json:"var A"`
+	B   int   `json:"var B"`
+	Err error `json:"-"`
+}
+
+func (err *ExpressionError) Error() string {
+	return fmt.Sprintf("error in expression %d * %d: %s", err.A, err.B, err.Err)
+}
+
+func NewExpressionError(a int, b int, err error) error {
+	return &ExpressionError{
+		A:   a,
+		B:   b,
+		Err: err,
+	}
+}
+
 func mul(a, b int) (int, error) {
 	r := a * b
 	if r/a != b {
 		// here we wrapped error ErrIntOverflow with additional message "error in expression..." and also provided expression.
-		return 0, fmt.Errorf("error in expression %d * %d: %w", a, b, ErrIntOverflow)
+		return 0, NewExpressionError(a, b, ErrIntOverflow) // fmt.Errorf("error in expression %d * %d: %w", a, b, ErrIntOverflow)
 	}
 	return r, nil
 }
@@ -26,7 +44,7 @@ func mul(a, b int) (int, error) {
 func div(a, b int) (int, error) {
 	if b == 0 {
 		// here we wrapped error ErrDivideByZero with additional message "error in expression..." and also provided expression.
-		return 0, fmt.Errorf("error in expression %d / %d: %w", a, b, ErrDivideByZero)
+		return 1, ErrDivideByZero //fmt.Errorf("error in expression %d / %d: %w", a, b, ErrDivideByZero)
 	}
 	return a / b, nil
 }
@@ -41,7 +59,7 @@ func pow(a, b int) (int, error) {
 		list = append(list, result)
 		if len(list) > 2 {
 			if list[len(list)-1] < list[len(list)-2] {
-				return 1, fmt.Errorf("error in expression %d * %d: %w", a, b, ErrIntOverflow)
+				return 1, NewExpressionError(a, b, ErrIntOverflow)
 			}
 		}
 	}
@@ -109,8 +127,14 @@ func main() {
 	for _, op := range ops {
 		result, err := op.F(op.A, op.B)
 		if err != nil {
-			log.Fatalf("Computation error: %v\n", err)
+			if errors.Is(err, ErrDivideByZero) {
+				fmt.Println("eternity")
+				continue
+			} else {
+				log.Fatalln("Computation error:", err)
+			}
 		}
+
 		fmt.Println(result)
 	}
 }
