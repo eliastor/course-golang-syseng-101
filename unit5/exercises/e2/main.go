@@ -89,12 +89,12 @@ func parseInstructionsStdin() ([]Operation, error) {
 
 		a, err := strconv.Atoi(words[1])
 		if err != nil {
-			return nil, fmt.Errorf("wrong instruction format \"%s\", argument A: %w", ErrNotValidInteger)
+			return nil, fmt.Errorf("wrong instruction format \"%s\", argument A: %w", line, ErrNotValidInteger)
 		}
 
 		b, err := strconv.Atoi(words[2])
 		if err != nil {
-			return nil, fmt.Errorf("wrong instruction format \"%s\", argument B: %w", ErrNotValidInteger)
+			return nil, fmt.Errorf("wrong instruction format \"%s\", argument B: %w", line, ErrNotValidInteger)
 		}
 
 		var op func(a, b int) (int, error)
