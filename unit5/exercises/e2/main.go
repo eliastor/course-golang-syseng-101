@@ -59,7 +59,7 @@ func pow(a, b int) (int, error) {
 		list = append(list, result)
 		if len(list) > 2 {
 			if list[len(list)-1] < list[len(list)-2] {
-				return 1, NewExpressionError(a, b, ErrIntOverflow)
+				return 0, NewExpressionError(a, b, ErrIntOverflow)
 			}
 		}
 	}

@@ -41,7 +41,7 @@ func pow(a, b int) (int, error) {
 		list = append(list, result)
 		if len(list) > 2 {
 			if list[len(list)-1] < list[len(list)-2] {
-				return 1, fmt.Errorf("error in expression %d * %d: %w", a, b, ErrIntOverflow)
+				return 0, fmt.Errorf("error in expression %d * %d: %w", a, b, ErrIntOverflow)
 			}
 		}
 	}

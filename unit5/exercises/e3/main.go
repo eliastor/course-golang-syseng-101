@@ -44,7 +44,7 @@ func mul(a, b int) (int, error) {
 func div(a, b int) (int, error) {
 	if b == 0 {
 		// here we wrapped error ErrDivideByZero with additional message "error in expression..." and also provided expression.
-		return 1, ErrDivideByZero //fmt.Errorf("error in expression %d / %d: %w", a, b, ErrDivideByZero)
+		return 0, ErrDivideByZero //fmt.Errorf("error in expression %d / %d: %w", a, b, ErrDivideByZero)
 	}
 	return a / b, nil
 }
@@ -59,7 +59,7 @@ func pow(a, b int) (int, error) {
 		list = append(list, result)
 		if len(list) > 2 {
 			if list[len(list)-1] < list[len(list)-2] {
-				return 1, NewExpressionError(a, b, ErrIntOverflow)
+				return 0, NewExpressionError(a, b, ErrIntOverflow)
 			}
 		}
 	}
