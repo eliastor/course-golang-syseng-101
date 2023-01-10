@@ -329,7 +329,13 @@ Remember that `a in power of b` it's just multiplying `a` to itself `b` times. A
 
 **Hint**
 
-To check overflow you can make inverse operation and divide calculated result by `a` and you should get `1`
+To check overflow you can make inverse operation and divide calculated result by `a` and you should get `1`.
+
+Another approach is to check that result on every multiplying step is greater than on previous.
+
+**Note**
+
+Using manual computation without using type conversion and math.Pow is more preferred for this task. If you need more real-world computational solution, take a look on [`math/big` package](https://pkg.go.dev/math/big).
 
 ### E2. Enhance errors
 
@@ -341,9 +347,9 @@ In previous exercise you can note that there are multiple statement that are alm
 
 - same for pow
 
-We should eliminate duplicates of logic and constants in our applications, so let's create custom Error type that must:
+We should eliminate duplicates of logic and constants in our applications, so let's create custom error type that must:
 
-- be defined as ExpressionError
+- be defined as `ExpressionError`
 - must wrap underlying error (in example above they are `ErrIntOverflow` or `ErrDivideByZero`)
 - must print error message in same format as examples above
 
@@ -353,6 +359,9 @@ Don't change definitions of `ErrDivideByZero` and `ErrIntOverflow` errors, they 
 
 Share your implementation `unit5/exercises/e2/main.go` in github PR.
 Don't hesitate to copy contents of `unit5/exercises/e1/` to `unit5/exercises/e2/` and modify necessary files or add new ones.
+
+The test will check any of `ErrDivideByZero` or `ErrIntOverflow` is wrapped to `ExpressionError`
+
 
 **Hint**
 
@@ -366,7 +375,7 @@ To not filling ExpressionError struct manually feel free to make function NewExp
 
 In previous exercise we created `ExpressionError` struct. When we got error in main, we have no clue is what kind of error is wrapped by `ExpressionError`.
 
-Let's change behavior of the program: if the error wrapped by `ExpressionError` is `ErrDivideByZero`, then just return `eternity` in stdout as normal result of operation and continue the work.
+Let's change behavior of the program: if the error wrapped by `ExpressionError` is `ErrDivideByZero`, then just return `eternity` in stdout as normal result of operation and continue the work. Note that no additional lines or numbers must be outputted for eternity case
 
 Don't add additional Prints to output. It is checked in tests.
 
