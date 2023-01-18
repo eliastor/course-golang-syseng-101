@@ -15,36 +15,44 @@ var ErrIntOverflow = errors.New("integer overflow")
 var ErrNotValidInteger = errors.New("argument is not valid integer")
 
 type ExpressionError struct {
-	A   int   `json:"var A"`
-	B   int   `json:"var B"`
-	Err error `json:"-"`
+	A     int
+	B     int
+	Typeo string
+	Err   error
 }
 
 func (err *ExpressionError) Error() string {
-	return fmt.Sprintf("error in expression %d * %d: %s", err.A, err.B, err.Err)
+	return fmt.Sprintf("error in expression %d %s %d: %s", err.A, err.Typeo, err.B, err.Err)
 }
 
-func NewExpressionError(a int, b int, err error) error {
+func NewExpressionError(a int, b int, typeo string, err error) error {
 	return &ExpressionError{
-		A:   a,
-		B:   b,
-		Err: err,
+		A:     a,
+		B:     b,
+		Typeo: typeo,
+		Err:   err,
 	}
+}
+
+func (e ExpressionError) Unwrap() error {
+	return e.Err
 }
 
 func mul(a, b int) (int, error) {
 	r := a * b
+	var typeo = "*"
 	if r/a != b {
 		// here we wrapped error ErrIntOverflow with additional message "error in expression..." and also provided expression.
-		return 0, NewExpressionError(a, b, ErrIntOverflow) // fmt.Errorf("error in expression %d * %d: %w", a, b, ErrIntOverflow)
+		return 0, NewExpressionError(a, b, typeo, ErrIntOverflow) // fmt.Errorf("error in expression %d * %d: %w", a, b, ErrIntOverflow)
 	}
 	return r, nil
 }
 
 func div(a, b int) (int, error) {
+	var typeo = "/"
 	if b == 0 {
 		// here we wrapped error ErrDivideByZero with additional message "error in expression..." and also provided expression.
-		return 0, ErrDivideByZero //fmt.Errorf("error in expression %d / %d: %w", a, b, ErrDivideByZero)
+		return 0, NewExpressionError(a, b, typeo, ErrDivideByZero) //fmt.Errorf("error in expression %d / %d: %w", a, b, ErrDivideByZero)
 	}
 	return a / b, nil
 }
@@ -52,14 +60,14 @@ func div(a, b int) (int, error) {
 func pow(a, b int) (int, error) {
 
 	var list []int
-
+	var typeo = "/"
 	result := a
 	for i := 2; i <= b; i++ {
 		result *= a
 		list = append(list, result)
 		if len(list) > 2 {
 			if list[len(list)-1] < list[len(list)-2] {
-				return 0, NewExpressionError(a, b, ErrIntOverflow)
+				return 0, NewExpressionError(a, b, typeo, ErrIntOverflow)
 			}
 		}
 	}
