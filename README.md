@@ -68,6 +68,10 @@ More on [unit folder](unit5)
 
 ## Unit 6: Contexts
 
+ETC: 4-6 hours
+
+More on [unit folder](unit6)
+
 ## Roadmap of further units
 
 6. Tests
