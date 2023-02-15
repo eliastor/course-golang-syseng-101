@@ -215,7 +215,7 @@ TBA
 Extend code from exercise 0: Make http server that will:
 - listen 8080 port
 - call cycle() and return the output for url path `/cycle/<N>`, where `<N>` is number of cycle invocations of `cycle()` function. if no `<N>` specific (for example `curl http://localhost:8080/cycle/`) assume that N is 5.
-- when incoming request is cancelled, the handler must output to stdout or stderr of the server a message with following string: `incoming request %s was canceled by client`, where %s is request URI, for example: `2023/01/01 11:11:11 incoming request /cycle/?timeout=3 was canceled by client`.
+- when incoming request is cancelled, the handler must output to stdout or stderr of the server a message with following string: `incoming request %s was canceled by client`, where %s is request URI, for example: `2023/01/01 11:11:11 incoming request /cycle/ was canceled by client`.
 
 
 **Note**: Test verifies response body and headers of your http server by running it and sending generated request to the server and verifying the reply. Server must listens port 8080. You may organize code as your own.
@@ -304,7 +304,7 @@ incoming request /cycle/ was canceled by client
 
 Extend code from exercise 1: 
 
-- for `/cycle/` there is url query parameter `timeout` that can setup time limit of the request handler, for ex. `curl http://localhost:8080/cycle/?timeout=11`, means that after 11 seconds `cycle()` must return value.
+- for `/cycle/` there is url query parameter `timeout` that can setup time limit of the request handler, for ex. `curl http://localhost:8080/cycle/?timeout=11`, means that after 11 seconds `cycle()` must return value. Default value for timeout is 11
 - when incoming request is cancelled due to timeout, the handler must output to stdout or stderr of the server a message with following string: `incoming request %s was canceled by client`, where %s is request URI, for example: `2023/01/01 11:11:11 incoming request /cycle/ reached timeout`.
 
 **Note**: Test verifies response body and headers of your http server by running it and sending generated request to the server and verifying the reply. Server must listens port 8080. You may organize code as your own.
@@ -374,7 +374,7 @@ Propagate context form `cycle()` to `process()` and change `process()` to be abl
 
 **How to test yourself**
 
-Same as in previous exercise, but by default the first test must also return response:
+Same as in previous exercises, but by default the first test (`curl -v http://localhost:8080/cycle/`) must also return response:
 in terminal 2 similar message must appears:
 
 ```
