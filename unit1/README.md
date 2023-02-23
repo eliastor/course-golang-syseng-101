@@ -152,11 +152,11 @@ Read more about slices in [go blog article](https://go.dev/blog/slices-intro)
 1. `numbers.append(3)`
 2. `numbers.insert(3, 3)`
 3. `append(numbers, 3)`
-4. `numbers = append(numbers, 3)`
+4. `numbers = append(numbers, 3)` - this doing it
 
 #### Q2. From where is the variable fooVar accessible if it is declared outside of any functions in a file in package fooPackage located inside module fooModule
 
-1. anywhere inside `fooPackage`, not the rest of `fooModule`
+1. anywhere inside `fooPackage`, not the rest of `fooModule` - here
 2. by any application that imports `fooModule`
 3. from anywhere in `fooModule`
 4. by other packages in `fooModule` as long as they import `fooPackage`
@@ -172,7 +172,7 @@ Read more about slices in [go blog article](https://go.dev/blog/slices-intro)
 
 1. `for i,r:=0,rand.Int(); i < r%10; i++ { ... }`
 2. `for { ... }`
-3. `{ ... } for false` 
+3. `{ ... } for false` -- here is a failure
 4. `for _,c := range "foobar" { ... }`
 
 ## Excercises
