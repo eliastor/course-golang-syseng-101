@@ -181,6 +181,22 @@ In real world scenarios you can find that errors can happen at different stages 
 
 When we have much more function calls between error production and handling it's better to get more context what was exactly done to get clear sight of program flow while error was been produced, for achieving that we can use wrapping. 
 
+Here wrapping technique can help. Go errors can have `Unwrap()` method:
+
+```go
+func (e *YourCustomErrorType) Unwrap() error 
+```
+
+It means that error can include another error inside, so calling unwrap we can get the inside error. Meanwhile the inside error can also be wrap around other error too.
+
+Think of wrapping as if your mail hasn't reached recipient and on its way back to sender, every post office (function) pack your mail (error) to another envelope with their details. At the end you will get fat pack of nested envelopes where you can explore the whole path of your mail.
+
+In go there is already convenient function [`fmt.Errorf()`](https://pkg.go.dev/fmt#Errorf) that allows you wrap some error returned from function call with informative error message.
+
+Wrapping errors allow your to store errors you wrapped in custom error types or for errors created using `fmt.Errorf()`: `%w` in pattern string will inform Errorf to wrap provided error with surrounding message.
+
+Note that under the hood the `fmt.Errorf()` creates struct that stores error message provided for `%w` template value. Please note, how this Unwrap part is done in [`fmt` package](https://cs.opensource.google/go/go/+/refs/tags/go1.19.5:src/fmt/errors.go;l=32).
+
 Let's slightly modify example our second example:
 
 ```go
@@ -233,7 +249,8 @@ func main() {
 }
 ```
 
-Now we have all the context to get clues where error is happened and can determine the expression causing the error.
+Now we have all the context to get clues where error was happened and can determine the expression causing the error.
+
 
 Moreover, as soon as we wrapped `ErrDivideByZero` error with all the messages we still can compare generic error message, we received during execution of operation function F, with `ErrDivideByZero` error using `errors.Is` function: for example, we can use `errors.Is` to detect division by zero and print "eternity" for division by zero operation instead of the error: 
 
@@ -242,6 +259,8 @@ Moreover, as soon as we wrapped `ErrDivideByZero` error with all the messages we
     result, err := op.F(op.A, op.B)
 	if err != nil {
         if errors.Is(err, ErrDivideByZero) {
+            // according to the documentation it compares error to ErrDivideByZero
+            // until there is no more wrapped errors in err.
             fmt.Println("eternity")
         } else {
             fmt.Println("unexpected div error:", err)
@@ -252,9 +271,12 @@ Moreover, as soon as we wrapped `ErrDivideByZero` error with all the messages we
 ...
 ```
 
-Wrapping errors allow your to store errors you wrapped using custom error types with `Wrap()` method defined or for errors created using `fmt.Errorf()`: `%w` in pattern string will inform Errorf to wrap provided error with surrounding message.
+
+
 
 Generally, it’s a good idea to wrap an error with at least the function’s name, every time you “escalate” it up - i.e. every time you receive the error from a function and want to continue returning it back up the function chain.
+
+Note that for most of the cases it will be enough to provide detailed wrapping message and wrap error with `fmt.Errorf()`. If you need some specific format, behaviour or dynamic data in errors you should create your own custom error type with `Unwrap()` behaviour.
 
 ---
 
