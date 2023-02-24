@@ -1,0 +1,4 @@
+github.com/adamliesko/fakelog v0.0.0-20171027200816-adf939507075 h1:W1yJ4vM4YE9yghSGSxvOyxBff2xRSvBSwyFh5CO1kWo=
+github.com/adamliesko/fakelog v0.0.0-20171027200816-adf939507075/go.mod h1:xws/TzWf/iJRMOPk15lxHmiZ1BqMQECP/IrVbElXF5M=
+github.com/brianvoe/gofakeit v3.18.0+incompatible h1:wDOmHc9DLG4nRjUVVaxA+CEglKOW72Y5+4WNxUIkjM8=
+github.com/brianvoe/gofakeit v3.18.0+incompatible/go.mod h1:kfwdRA90vvNhPutZWfH7WPaDzUjz+CZFqG+rPkOjGOc=
